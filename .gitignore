@@ -1,0 +1,31 @@
+# Node.js
+node_modules/
+dist/
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-error.log
+pm2.log
+logs/
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# macOS y Windows
+.DS_Store
+Thumbs.db
+
+# Archivos de IDEs
+.vscode/
+.idea/
+
+# Archivos temporales
+*.swp
+*.swo
