@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "fead4264-2248-4bda-ae30-f24c49978c21",
+		"name": "FullStack JS",
+		"description": "Proyecto fullstack veterinaria en Node.JS Express.JS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42903936"
+	},
+	"item": [
+		{
+			"name": "Registrar Veterinario",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Rodrigo\",\n    \"email\": \"correo@correo.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/veterinarios",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener el perfil",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{auth_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/veterinarios/perfil",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios",
+						"perfil"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autenticar Usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();",
+							"pm.collectionVariables.set(\"auth_token\", response.token);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"correo@correo.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/veterinarios/login",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirma una cuenta via Token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/veterinarios/confirmar",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios",
+						"confirmar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resetear Email - Comprobar si usuario existe y generar token",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"correo@correo.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API_URL}}/veterinarios/olvide-password",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios",
+						"olvide-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valida el Token cuando el usuario cambia su password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_URL}}/veterinarios/olvide-password/1im7rrrf0mu2ojagfh58",
+					"host": [
+						"{{API_URL}}"
+					],
+					"path": [
+						"veterinarios",
+						"olvide-password",
+						"1im7rrrf0mu2ojagfh58"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:4000/api",
+			"type": "default"
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		}
+	]
+}
