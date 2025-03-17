@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
 import veterinarioRoutes from "./routes/veterinarioRoutes.js";
-
+import pacienteRoutes from "./routes/pacienteRoutes.js";
 //Instanciar
 const app = express();
 
@@ -20,7 +20,10 @@ conectarDB();
 const port = process.env.PORT || 4000;
 
 // Rutas
+// - Endpoint de veterinarios (modelos, controladores y routing)
 app.use("/api/veterinarios", veterinarioRoutes);
+// - Endpoint de pacientes (modelos, controladores y routing)
+app.use("/api/pacientes", pacienteRoutes);
 
 // Definiendo el template engine
 app.set("view engine", "pug");
