@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import conectarDB from "./config/db.js";
 import veterinarioRoutes from "./routes/veterinarioRoutes.js";
 import pacienteRoutes from "./routes/pacienteRoutes.js";
@@ -15,6 +16,25 @@ app.use(express.json());
 dotenv.config();
 // Conectar a la DB Mongo
 conectarDB();
+
+// Habilitar CORS para que el frontend pueda comunicarse con el backend
+const dominiosPermitidos = ["http://localhost:5173"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Comprobar si el origen está en la lista de dominios permitidos
+    if (dominiosPermitidos.indexOf(origin) !== -1) {
+      // El origen del request esta permitido.
+      // callback(): mensaje de error, acceso
+      callback(null, true);
+    } else {
+      // Bloquear el origen
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+};
+
+// Ya creadas las opciones de CORS, se habilitan
+app.use(cors(corsOptions));
 
 // Seleccionar puerto (el 3000 es para el frontend)
 const port = process.env.PORT || 4000;
