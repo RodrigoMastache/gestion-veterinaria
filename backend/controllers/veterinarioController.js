@@ -3,12 +3,14 @@ import Veterinario from "../models/Veterinario.js";
 // Importando el que genera JSON Web Token
 import generarJWT from "../helpers/generarJWT.js";
 import generarId from "../helpers/generarId.js";
+// Importando el helper para enviar correo de registro
+import emailRegistro from "./../helpers/emailRegistro.js";
 
 // Asociando funciones a las rutas
 const registrar = async (req, res) => {
   // Leyendo datos recibidos a este endpoint (request.body)
   // const { nombre, email, password } = req.body;
-  const { email } = req.body;
+  const { email, nombre } = req.body;
   try {
     // Prevenir usuarios duplicados (por email)
     // - Consultar BD para ver si existe el email:
@@ -24,6 +26,13 @@ const registrar = async (req, res) => {
     const veterinario = new Veterinario(req.body);
     // Bloqueamos la linea con await hasta que finalice al guardar el registro.
     const veterinarioGuardado = await veterinario.save();
+    // Enviar el email de registro
+    emailRegistro({
+      email,
+      nombre,
+      token: veterinarioGuardado.token,
+    });
+
     res.json(veterinarioGuardado);
   } catch (error) {
     console.log(error);
