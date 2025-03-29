@@ -1,6 +1,7 @@
 import { useState } from "react";
 // Para manejar los enlaces (puede ser "Link" o "NavLink")
 import { Link } from "react-router-dom";
+import axios from "axios";
 // Componente de alertas
 import Alerta from "../components/Alerta";
 
@@ -15,7 +16,7 @@ const Registrar = () => {
   const [alerta, setAlerta] = useState({});
 
   // Cuando se haga sumbit en el formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault(); // prevenir la acción por default (el envío)
 
     // Validar campos
@@ -53,6 +54,16 @@ const Registrar = () => {
     setAlerta({});
 
     // Crear el usuario en la API
+    // a traves de fetch api (nativo) o axios
+    // con async/await o con promises
+    try {
+      const url = "http://localhost:4000/api/veterinarios";
+      await axios.post(url, { nombre, email, password });
+      setAlerta({ msg: "Creado correctamente, revisa tu email", error: false });
+    } catch (error) {
+      // Leer error del back
+      setAlerta({ msg: error.response.data.msg, error: true });
+    }
   };
 
   const { msg } = alerta;
