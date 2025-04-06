@@ -18,7 +18,7 @@ dotenv.config();
 conectarDB();
 
 // Habilitar CORS para que el frontend pueda comunicarse con el backend
-const dominiosPermitidos = ["http://localhost:5173"];
+const dominiosPermitidos = [process.env.FRONTEND_URL];
 const corsOptions = {
   origin: function (origin, callback) {
     // Comprobar si el origen está en la lista de dominios permitidos

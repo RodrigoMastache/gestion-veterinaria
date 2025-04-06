@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 // Importando hook "useParams" para extraer datos de la url
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+// Importar el cliente axios (viene la base de la url)
+import clienteAxios from "./../config/axios";
+
 import Alerta from "./../components/Alerta";
 const ConfirmarCuenta = () => {
   // Por default la cuenta no va a estar confirmada "false"
@@ -19,13 +21,11 @@ const ConfirmarCuenta = () => {
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {
-        // Se usa la variable de entorno del backend
-        const url = `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/veterinarios/confirmar/${id}`;
+        const url = `/veterinarios/confirmar/${id}`;
 
         // Respuesta de axios. (por default es "get", por lo que se puede omitir)
-        const { data } = await axios(url);
+        // Se usa el cliente axios, que ya contiene la url base para hacer la petición.
+        const { data } = await clienteAxios(url);
         // Se confirmo la cuenta
         setCuentaConfirmada(true);
         // Establecer alerta de cuenta confirmada
